@@ -6,10 +6,25 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
-
-// Rutas directas a las Vistas (Truco para verlas sin crear el Controlador aún)
 $routes->view('/login', 'login');
-
-// Nota: Si guardaste el archivo del paso anterior como signup.php usa esto:
 $routes->view('/registro', 'signup'); 
-// Si lo guardaste como registro.php, entonces usa: $routes->view('/registro', 'registro');
+$routes->view('/categorias/peliculas', 'categories');
+$routes->view('/categorias/series', 'categories');
+$routes->view('/detalles', 'streaming_detalles');
+
+$routes->get('/login', 'Login::index');
+
+// Procesar el formulario cuando se le da clic a "Entrar"
+$routes->post('/login/autenticar', 'Login::autenticar');
+
+// Cerrar sesión
+$routes->get('/logout', 'Login::logout');
+
+// Ruta protegida de prueba para el administrador
+$routes->get('/admin/dashboard', function() {
+    // Pequeño candado de seguridad: si no hay sesión, regresalo al login
+    if (!session()->get('is_logged_in')) {
+        return redirect()->to(base_url('login'));
+    }
+    return view('admin/dashboard');
+});

@@ -43,8 +43,8 @@
                                 <li class="active"><a href="<?= base_url() ?>">Inicio</a></li>
                                 <li><a href="#">Categorias <span class="arrow_carrot-down"></span></a>
                                     <ul class="dropdown">
-                                        <li><a href="#">Películas</a></li>
-                                        <li><a href="#">Series</a></li>
+                                        <li><a href="<?= base_url('categorias/peliculas') ?>">Películas</a></li>
+                                        <li><a href="<?= base_url('categorias/series') ?>">Series</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">Planes</a></li>
@@ -86,7 +86,8 @@
                     <div class="footer__nav">
                         <ul>
                             <li class="active"><a href="<?= base_url() ?>">Inicio</a></li>
-                            <li><a href="#">Categorias</a></li>
+                            <li><a href="<?= base_url('categorias/peliculas') ?>">Películas</a></li>
+                            <li><a href="<?= base_url('categorias/series') ?>">Series</a></li>
                         </ul>
                     </div>
                 </div>

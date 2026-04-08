@@ -17,7 +17,6 @@
 
     <section class="signup spad">
         <center>
-
                     <div class="login__form">
                         <h3 class="text-center">Crea una cuenta</h3>
                         <form action="<?= base_url('registro/guardar') ?>" method="POST">

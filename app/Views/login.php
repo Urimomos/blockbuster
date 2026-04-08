@@ -20,6 +20,11 @@
                 <div class="col-lg-6">
                     <div class="login__form">
                         <h3>Acceder</h3>
+                        <?php if(session()->getFlashdata('error')): ?>
+                            <div class="alert alert-danger p-2 text-center" style="font-size: 14px;">
+                                <?= session()->getFlashdata('error') ?>
+                            </div>
+                        <?php endif; ?>
                         <form action="<?= base_url('login/autenticar') ?>" method="POST">
                             <div class="input__item">
                                 <input type="email" name="email" placeholder="Correo electrónico" required>
