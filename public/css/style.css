@@ -36,7 +36,7 @@ body {
 	height: 100%;
 	font-family: "Mulish", sans-serif;
 	-webkit-font-smoothing: antialiased;
-	background: #0b0c2a;
+	background: #0e1044;
 }
 
 h1,
@@ -1951,7 +1951,7 @@ ol {
 	color: #ffffff;
 	height: 50px;
 	width: 50px;
-	background: #e53637;
+	background: #bfe536;
 	line-height: 50px;
 	text-align: center;
 	border-radius: 50%;
@@ -2339,4 +2339,147 @@ ol {
 	.anime__review__item__text {
 		padding: 18px 20px 20px;
 	}
+}
+/* --- TEMA BLOCKBUSTER --- */
+
+/* Fondo general si quieres que el área de productos sea azul marino */
+.bb-background {
+    background-color: #001A5E; /* Azul Blockbuster */
+    padding-bottom: 50px;
+}
+
+/* Etiquetas de género (Ej: Sci-Fi / Aventura) */
+.hero__text.blockbuster-theme .bb-label {
+    background-color: #FFCC00; /* Amarillo Blockbuster */
+    color: #001A5E;
+    font-weight: bold;
+    border-radius: 2px;
+}
+
+/* Botón de "Alquilar Ahora" en el slider */
+.hero__text.blockbuster-theme .btn-bb {
+    background-color: #FFCC00;
+    color: #001A5E;
+    border-radius: 4px;
+    font-weight: 800;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.hero__text.blockbuster-theme .btn-bb i {
+    background-color: #001A5E;
+    color: #FFCC00;
+}
+
+.hero__text.blockbuster-theme .btn-bb:hover {
+    background-color: #e6b800; /* Amarillo un poco más oscuro al pasar el mouse */
+    color: #001A5E;
+}
+
+/* Título de la sección "Estrenos Recientes" */
+.bb-title h4 {
+    color: #FFCC00;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-left: 5px solid #FFCC00; /* Línea decorativa a la izquierda */
+    padding-left: 15px;
+}
+/* Estilo para la ventana de descripción */
+.bb-modal {
+    background-color: #001A5E; /* Azul Blockbuster */
+    color: white;
+    border: 3px solid #FFCC00; /* Borde amarillo */
+}
+
+.bb-modal .modal-header {
+    border-bottom: 1px solid #FFCC00;
+}
+
+.bb-modal .modal-title {
+    color: #FFCC00;
+    font-weight: bold;
+}
+
+.bb-modal .close {
+    color: white;
+}
+/* --- DISEÑO DEL BOTÓN BLOCKBUSTER --- */
+
+.btn-bb {
+    background-color: #FFCC00; /* Amarillo Blockbuster */
+    color: #001A5E !important; /* Azul marino profundo */
+    font-size: 1.1rem;
+    font-weight: 900; /* Texto súper grueso */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 28px;
+    border: 3px solid #001A5E; /* Borde oscuro para enmarcarlo */
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Espacio entre el texto y el ícono si lo usas */
+    text-decoration: none;
+    
+    /* Efecto 3D de sombra dura (Estilo Retro) */
+    box-shadow: 5px 5px 0px #001A5E; 
+    transition: all 0.15s ease-in-out;
+}
+
+/* Efecto al pasar el mouse por encima (Hover) */
+.btn-bb:hover {
+    background-color: #ffd633; /* Un amarillo ligeramente más brillante */
+    
+    /* El botón se mueve un poco hacia abajo y a la derecha */
+    transform: translate(2px, 2px); 
+    
+    /* La sombra se hace más pequeña para simular que se está presionando */
+    box-shadow: 3px 3px 0px #001A5E; 
+}
+
+/* Efecto al hacer clic (Active) */
+.btn-bb:active {
+    background-color: #e6b800;
+    
+    /* El botón se hunde por completo */
+    transform: translate(5px, 5px); 
+    
+    /* Desaparece la sombra */
+    box-shadow: 0px 0px 0px #001A5E; 
+}
+
+/* Si tu botón tiene un ícono (la etiqueta <i>), aseguramos el color */
+.btn-bb i {
+    font-size: 1.2rem;
+}
+/* --- EFECTO HOVER PARA PORTADAS DE BLOCKBUSTER --- */
+
+/* 1. Le damos una transición suave para que no brinque de golpe */
+.product__item__pic {
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out !important;
+    position: relative; /* Ayuda a que el efecto de zoom no mueva otros elementos */
+    z-index: 1;
+}
+
+/* 2. El efecto mágico al pasar el cursor (hover) */
+.product__item__pic:hover {
+    /* Crece un 8% y sube 8 píxeles */
+    transform: scale(1.08) translateY(-8px); 
+    
+    /* Agrega la sombra dura amarilla estilo retro */
+    box-shadow: 8px 8px 0px #FFCC00; 
+    
+    /* Cambia el borde azul oscuro a amarillo para resaltarla */
+    border-color: #FFCC00 !important; 
+    
+    /* La pone por encima de las demás tarjetas */
+    z-index: 10; 
+}
+
+/* 3. Un pequeño extra: hacer que el título también brille o cambie de color al pasar el cursor por la tarjeta */
+.product__item:hover .product__item__text h5 {
+    color: #FFCC00 !important;
+    transition: color 0.2s ease-in-out;
 }

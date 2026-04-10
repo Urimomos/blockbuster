@@ -32,7 +32,7 @@
                 <div class="col-lg-2">
                     <div class="header__logo">
                         <a href="<?= base_url() ?>">
-                            <img src="<?= base_url('img/logo.png') ?>" alt="Logo Blockbuster">
+                            <img src="<?= base_url('img/blockbuster_logo.png') ?>" alt="Logo Blockbuster">
                         </a>
                     </div>
                 </div>
@@ -42,10 +42,11 @@
                             <ul>
                                 <li class="active"><a href="<?= base_url() ?>">Inicio</a></li>
                                 <li><a href="#">Categorias <span class="arrow_carrot-down"></span></a>
-                                    <ul class="dropdown">
-                                        <li><a href="<?= base_url('categorias/peliculas') ?>">Películas</a></li>
-                                        <li><a href="<?= base_url('categorias/series') ?>">Series</a></li>
-                                    </ul>
+                                <ul class="dropdown">
+                                    <li><a href="<?= base_url('categorias/peliculas') ?>">Películas</a></li>
+                                    <li><a href="<?= base_url('categorias/series') ?>">Series</a></li>
+                                </ul>
+                              
                                 </li>
                                 <li><a href="#">Planes</a></li>
                                 <li><a href="#" class="search-switch"><span class="icon_search"></span></a></li>
@@ -79,7 +80,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="footer__logo">
-                        <a href="<?= base_url() ?>"><img src="<?= base_url('img/logo.png') ?>" alt=""></a>
+                        <a href="<?= base_url() ?>"><img src="<?= base_url('img/blockbuster_logo.png') ?>" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
