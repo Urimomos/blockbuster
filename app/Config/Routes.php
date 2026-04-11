@@ -9,8 +9,10 @@ $routes->get('/', 'Home::index');
 $routes->view('/login', 'login');
 $routes->view('/registro', 'signup'); 
 $routes->view('/categorias/peliculas', 'categories');
-$routes->view('/categorias/series', 'categories');
+$routes->view('/categorias/series', 'series');
 $routes->view('/detalles', 'streaming_detalles');
+
+$routes->view('/planes', 'planes');
 
 $routes->get('/login', 'Login::index');
 
