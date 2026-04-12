@@ -11,6 +11,7 @@ $routes->view('/registro', 'signup');
 $routes->view('/categorias/peliculas', 'categories');
 $routes->view('/categorias/series', 'series');
 $routes->view('/detalles', 'streaming_detalles');
+$routes->get('/buscar', 'Home::buscar');
 
 $routes->view('/planes', 'planes');
 

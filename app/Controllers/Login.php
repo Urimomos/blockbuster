@@ -9,8 +9,40 @@ class Login extends BaseController
     {
         return view('login');
     }
-
     public function autenticar()
+    {
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+
+        // 1. ENCRIPTAMOS LA CONTRASEÑA EN SHA-256 PARA QUE COINCIDA CON LA BD
+        $passwordHashed = hash('sha256', $password);
+
+        $usuarioModel = new UsuarioModel();
+        
+        // 2. LE PASAMOS LA CONTRASEÑA YA ENCRIPTADA AL MODELO
+        $usuario = $usuarioModel->validarUsuario($email, $passwordHashed);
+
+        if ($usuario) {
+            session()->set([
+                'is_logged_in' => true,
+                'id_usuario'   => $usuario['id_usuario'],
+                'nombre'       => $usuario['nombre_usuario'] . ' ' . $usuario['ap_usuario'],
+                'email'        => $usuario['email_usuario'],
+                'id_rol'       => $usuario['id_rol'],
+                'rol_nombre'   => $usuario['nombre_rol'] 
+            ]);
+
+            if ($usuario['id_rol'] == 745 || $usuario['id_rol'] == 125) {
+                return redirect()->to(base_url('admin/dashboard'));
+            } else {
+                return redirect()->to(base_url('/'));
+            }
+        } else {
+            return redirect()->to(base_url('login'))->with('error', 'Credenciales incorrectas o cuenta deshabilitada.');
+        }
+    }
+
+   /* public function autenticar()
     {
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
@@ -37,7 +69,7 @@ class Login extends BaseController
         } else {
             return redirect()->to(base_url('login'))->with('error', 'Credenciales incorrectas o cuenta deshabilitada.');
         }
-    }
+    }*/
 
     public function logout()
     {

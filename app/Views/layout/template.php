@@ -97,6 +97,46 @@
             color: #001A5E !important;
             transform: scale(1.05);
         }
+
+        /* ================================================== */
+        /* --- DISEÑO DEL BUSCADOR (ADIÓS PANTALLA NEGRA) --- */
+        /* ================================================== */
+        
+        .search-model {
+            background: rgba(0, 12, 43, 0.85) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .search-model-form input {
+            color: #ffffff !important;
+            border-bottom: 2px solid #FFCC00 !important;
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem !important;
+        }
+
+        .search-model-form input::placeholder {
+            color: rgba(255, 255, 255, 0.5) !important;
+            font-size: 1.5rem;
+        }
+
+        .search-close-switch {
+            color: #FFCC00 !important;
+            background: rgba(255, 204, 0, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s ease;
+        }
+
+        .search-close-switch:hover {
+            background: #FFCC00;
+            color: #001A5E !important;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 
@@ -182,8 +222,9 @@
     <div class="search-model">
         <div class="h-100 d-flex align-items-center justify-content-center">
             <div class="search-close-switch"><i class="icon_close"></i></div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
+            
+            <form class="search-model-form" action="<?= base_url('buscar') ?>" method="GET">
+                <input type="text" name="q" id="search-input" placeholder="Buscar películas, series..." required autocomplete="off">
             </form>
         </div>
     </div>
