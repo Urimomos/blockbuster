@@ -137,7 +137,38 @@
             color: #001A5E !important;
             transform: scale(1.1);
         }
+        /* ================================================== */
+        /* --- FONDO CINEMATOGRÁFICO PREMIUM (TODO EL SITIO)- */
+        /* ================================================== */
+        
+        /* Aplicamos el gradiente al fondo de toda la página */
+        body, html {
+            background-color: #01040a !important; /* Color de respaldo */
+            /* Luz azul profunda en el centro superior que se difumina a negro espacial */
+            background-image: radial-gradient(ellipse at 50% 0%, #001A5E 0%, #01040a 70%) !important;
+            background-attachment: fixed !important; /* Congela el fondo al hacer scroll */
+            color: #ffffff;
+        }
+
+        /* Hacemos que las secciones que trae tu plantilla por defecto 
+           sean transparentes para que dejen ver nuestro nuevo fondo premium 
+        */
+        .normal-breadcrumb, 
+        .spad, 
+        .product-page, 
+        .anime-details,
+        .breadcrumb-option {
+            background-color: transparent !important;
+            background: transparent !important;
+        }
+
+        /* Le damos un toque elegante a los títulos de las secciones ("Más Alquilados", etc) */
+        .section-title h4, .section-title h5 {
+            color: #ffffff !important;
+            text-shadow: 0px 4px 10px rgba(0,0,0,0.8);
+        }
     </style>
+    
 </head>
 
 <body>
