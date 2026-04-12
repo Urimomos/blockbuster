@@ -28,7 +28,7 @@
         .hero { 
             padding-top: 40px; 
             padding-bottom: 60px; 
-            background-color: #070e20; /* Azul muy oscuro para que resalte la tarjeta */
+            background-color: #070e20; 
         }
         
         /* Contenedor del Slider */
@@ -60,11 +60,11 @@
         .glass-box {
             position: relative;
             z-index: 2;
-            background: rgba(255, 255, 255, 0.08); /* Blanco super transparente */
-            backdrop-filter: blur(12px); /* Efecto difuminado */
+            background: rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(12px); 
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-left: 8px solid #FFCC00; /* La franja amarilla a la izquierda */
+            border-left: 8px solid #FFCC00; 
             border-radius: 10px;
             padding: 40px;
             max-width: 480px;
@@ -152,57 +152,19 @@
     <section class="hero">
         <div class="container"> 
             <div class="hero__slider owl-carousel">
-                
-                <div class="hero__items set-bg" data-setbg="<?= base_url('img/Peliculas/jurassic.jpg') ?>">
-                    <div class="hero-dark-fade"></div>
-                    <div class="glass-box">
-                        <span class="glass-tag">CIENCIA FICCIÓN | SPIELBERG</span>
-                        <h2 class="glass-title">Jurassic Park</h2>
-                        <p class="glass-desc">Un multimillonario crea un parque temático con dinosaurios clonados, pero las cosas salen mal durante una visita de prueba.</p>
-                        <a href="#" data-toggle="modal" data-target="#modalJP" class="glass-btn"><i class="fa fa-ticket"></i> ALQUILAR</a>
+                <?php if(!empty($recientes)): foreach($recientes as $item): ?>
+                    <div class="hero__items set-bg" data-setbg="<?= base_url('img/Peliculas/' . $item['caratula_streaming']) ?>">
+                        <div class="hero-dark-fade"></div>
+                        <div class="glass-box">
+                            <span class="glass-tag"><?= mb_strtoupper($item['nombre_genero']) ?> | <?= $item['clasificacion_streaming'] ?></span>
+                            <h2 class="glass-title"><?= esc($item['nombre_streaming']) ?></h2>
+                            <p class="glass-desc"><?= esc(word_limiter($item['sipnosis_streaming'], 20)) ?></p>
+                            <a href="#" data-toggle="modal" data-target="#modal-<?= $item['id_streaming'] ?>" class="glass-btn"><i class="fa fa-ticket"></i> DETALLES</a>
+                        </div>
                     </div>
-                </div>
-
-                <div class="hero__items set-bg" data-setbg="<?= base_url('img/Peliculas/caratula_casa_de_papel.png') ?>">
-                    <div class="hero-dark-fade"></div>
-                    <div class="glass-box">
-                        <span class="glass-tag">ACCIÓN | SUSPENSO</span>
-                        <h2 class="glass-title">La Casa de Papel</h2>
-                        <p class="glass-desc">Un misterioso personaje, "El Profesor", planea el mayor atracos jamás ideado. Únete a la resistencia.</p>
-                        <a href="#" class="glass-btn"><i class="fa fa-ticket"></i> ALQUILAR</a>
-                    </div>
-                </div>
-
-                <div class="hero__items set-bg" data-setbg="<?= base_url('img/Peliculas/caratula_mufasa.png') ?>">
-                    <div class="hero-dark-fade"></div>
-                    <div class="glass-box">
-                        <span class="glass-tag">AVENTURA | FAMILIAR</span>
-                        <h2 class="glass-title">Mufasa</h2>
-                        <p class="glass-desc">El rey de la sabana, Mufasa, enseña a su hijo Simba el "ciclo de la vida" mientras se enfrenta a su envidioso hermano Scar.</p>
-                        <a href="#" class="glass-btn"><i class="fa fa-ticket"></i> ALQUILAR</a>
-                    </div>
-                </div>
-
-                <div class="hero__items set-bg" data-setbg="<?= base_url('img/Peliculas/terminator.jpg') ?>">
-                    <div class="hero-dark-fade"></div>
-                    <div class="glass-box">
-                        <span class="glass-tag">ACCIÓN | SCI-FI</span>
-                        <h2 class="glass-title">Terminator 2</h2>
-                        <p class="glass-desc">Un cyborg es enviado desde el futuro para proteger a un joven John Connor de un androide asesino más avanzado.</p>
-                        <a href="#" data-toggle="modal" data-target="#modalT2" class="glass-btn"><i class="fa fa-ticket"></i> ALQUILAR</a>
-                    </div>
-                </div>
-
-                <div class="hero__items set-bg" data-setbg="<?= base_url('img/Peliculas/the_matrix.jpg') ?>">
-                    <div class="hero-dark-fade"></div>
-                    <div class="glass-box">
-                        <span class="glass-tag">CIENCIA FICCIÓN | ACCIÓN</span>
-                        <h2 class="glass-title">The Matrix</h2>
-                        <p class="glass-desc">Un hacker descubre que la realidad que conoce es una simulación creada por máquinas, y se une a la rebelión para liberar a la humanidad.</p>
-                        <a href="#" data-toggle="modal" data-target="#modalMatrix" class="glass-btn"><i class="fa fa-ticket"></i> ALQUILAR</a>
-                    </div>
-                </div>
-
+                <?php endforeach; else: ?>
+                    <p class="text-white text-center">No hay estrenos recientes por mostrar.</p>
+                <?php endif; ?>
             </div>
         </div>
     </section>
@@ -218,49 +180,20 @@
                     </div>
                     
                     <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<?= base_url('img/Peliculas/jurassic.jpg') ?>" data-toggle="modal" data-target="#modalJP" style="cursor: pointer; border: 2px solid #001A5E;">
-                                    <div class="ep" style="background-color: #FFCC00; color: #001A5E; font-weight: bold;">HOT</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <h5 style="color: white; margin-top: 10px;">Jurassic Park</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<?= base_url('img/Peliculas/terminator.jpg') ?>" data-toggle="modal" data-target="#modalT2" style="cursor: pointer; border: 2px solid #001A5E;">
-                                    <div class="ep" style="background-color: #FFCC00; color: #001A5E; font-weight: bold;">VHS</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <h5 style="color: white; margin-top: 10px;">Terminator 2</h5>
+                        <?php if(!empty($peliculas)): foreach($peliculas as $peli): ?>
+                            <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="<?= base_url('img/Peliculas/' . $peli['caratula_streaming']) ?>" data-toggle="modal" data-target="#modal-<?= $peli['id_streaming'] ?>" style="cursor: pointer; border: 2px solid #001A5E;">
+                                        <div class="ep" style="background-color: #FFCC00; color: #001A5E; font-weight: bold;"><?= $peli['clasificacion_streaming'] ?></div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h5 style="color: white; margin-top: 10px;"><?= esc($peli['nombre_streaming']) ?></h5>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<?= base_url('img/Peliculas/Hombre_Negro.jpg') ?>" data-toggle="modal" data-target="#modalMIB" style="cursor: pointer; border: 2px solid #001A5E;">
-                                    <div class="ep" style="background-color: #FFCC00; color: #001A5E; font-weight: bold;">VHS</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <h5 style="color: white; margin-top: 10px;">Hombres de Negro</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<?= base_url('img/Peliculas/volver_futuro.jpg') ?>" data-toggle="modal" data-target="#modalBTTF" style="cursor: pointer; border: 2px solid #001A5E;">
-                                    <div class="ep" style="background-color: #FFCC00; color: #001A5E; font-weight: bold;">CLÁSICO</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <h5 style="color: white; margin-top: 10px;">Volver al Futuro</h5>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; else: ?>
+                            <div class="col-12"><p class="text-white">No hay películas disponibles.</p></div>
+                        <?php endif; ?>
                     </div>
 
                 </div>
@@ -279,49 +212,20 @@
                     </div>
                     
                     <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<?= base_url('img/series/Drake_josh.jpg') ?>" data-toggle="modal" data-target="#modalXF" style="cursor: pointer; border: 2px solid #001A5E;">
-                                    <div class="ep" style="background-color: #FFCC00; color: #001A5E; font-weight: bold;">T. 1-3</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <h5 style="color: white; margin-top: 10px;">Drake y Josh</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<?= base_url('img/series/friends.jpg') ?>" data-toggle="modal" data-target="#modalFriends" style="cursor: pointer; border: 2px solid #001A5E;">
-                                    <div class="ep" style="background-color: #FFCC00; color: #001A5E; font-weight: bold;">T. 1</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <h5 style="color: white; margin-top: 10px;">Friends</h5>
+                        <?php if(!empty($series)): foreach($series as $serie): ?>
+                            <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="<?= base_url('img/series/' . $serie['caratula_streaming']) ?>" data-toggle="modal" data-target="#modal-<?= $serie['id_streaming'] ?>" style="cursor: pointer; border: 2px solid #001A5E;">
+                                        <div class="ep" style="background-color: #FFCC00; color: #001A5E; font-weight: bold;">T. <?= $serie['temporadas_streaming'] ?></div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h5 style="color: white; margin-top: 10px;"><?= esc($serie['nombre_streaming']) ?></h5>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<?= base_url('img/series/malcom.jpg') ?>" data-toggle="modal" data-target="#modalMalcolm" style="cursor: pointer; border: 2px solid #001A5E;">
-                                    <div class="ep" style="background-color: #FFCC00; color: #001A5E; font-weight: bold;">T. 1-2</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <h5 style="color: white; margin-top: 10px;">Malcolm el de en medio</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<?= base_url('img/series/principe.jpg') ?>" data-toggle="modal" data-target="#modalPrincipe" style="cursor: pointer; border: 2px solid #001A5E;">
-                                    <div class="ep" style="background-color: #FFCC00; color: #001A5E; font-weight: bold;">CLÁSICO</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <h5 style="color: white; margin-top: 10px;">El Príncipe del Rap</h5>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; else: ?>
+                            <div class="col-12"><p class="text-white">No hay series disponibles.</p></div>
+                        <?php endif; ?>
                     </div>
 
                 </div>
@@ -329,176 +233,38 @@
         </div>
     </section>
 
-    <div class="modal fade bb-video-modal" id="modalJP" tabindex="-1" role="dialog" aria-hidden="true">
+    <?php 
+        // Unimos los 3 arrays para crear los modales sin duplicarlos
+        $todos_los_modales = array_merge($recientes ?? [], $peliculas ?? [], $series ?? []);
+        $modales_unicos = [];
+        foreach($todos_los_modales as $m) {
+            $modales_unicos[$m['id_streaming']] = $m;
+        }
+        
+        foreach($modales_unicos as $modal_item): 
+    ?>
+    <div class="modal fade bb-video-modal" id="modal-<?= $modal_item['id_streaming'] ?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document"> 
             <div class="modal-content bb-modal">
                 <div class="modal-header">
-                    <h5 class="modal-title" style="color: #FFCC00; font-weight: bold;">Jurassic Park (1993)</h5>
+                    <h5 class="modal-title" style="color: #FFCC00; font-weight: bold;"><?= esc($modal_item['nombre_streaming']) ?> (<?= date('Y', strtotime($modal_item['fecha_lanzamiento_streaming'])) ?>)</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button>
                 </div>
                 <div class="modal-body" style="color: white; background-color: #001A5E;">
                     <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 20px; border: 2px solid #FFCC00; border-radius: 5px;">
-                        <iframe class="embed-responsive-item" src="" data-src="https://www.youtube.com/embed/dLDkNge_AhE" allowfullscreen></iframe>
+                        <iframe class="embed-responsive-item" src="" data-src="<?= base_url('videos/' . $modal_item['trailer_streaming']) ?>" allowfullscreen></iframe>
                     </div>
-                    <p><strong>Sinopsis:</strong> Un multimillonario crea un parque temático con dinosaurios clonados, pero las cosas salen mal durante una visita de prueba.</p>
-                    <p><strong>Género:</strong> Ciencia Ficción / Aventura</p>
-                    <p><strong>Precio Alquiler:</strong> $2.50 (VHS)</p>
+                    <p><strong>Sinopsis:</strong> <?= esc($modal_item['sipnosis_streaming']) ?></p>
+                    <p><strong>Género:</strong> <?= esc($modal_item['nombre_genero']) ?></p>
+                    <p><strong>Clasificación:</strong> <?= esc($modal_item['clasificacion_streaming']) ?></p>
+                    <div class="text-right mt-3">
+                        <a href="<?= base_url('detalles/' . $modal_item['id_streaming']) ?>" class="btn btn-warning" style="color: black; font-weight: bold;">Más Info / Alquilar</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="modal fade bb-video-modal" id="modalT2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content bb-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color: #FFCC00; font-weight: bold;">Terminator 2: El Juicio Final (1991)</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button>
-                </div>
-                <div class="modal-body" style="color: white; background-color: #001A5E;">
-                    <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 20px; border: 2px solid #FFCC00; border-radius: 5px;">
-                        <iframe class="embed-responsive-item" src="" data-src="https://www.youtube.com/embed/CRRlbK5w8AE" allowfullscreen></iframe>
-                    </div>
-                    <p><strong>Sinopsis:</strong> Un cyborg es enviado desde el futuro para proteger a un joven John Connor de un androide asesino más avanzado.</p>
-                    <p><strong>Género:</strong> Acción / Sci-Fi</p>
-                    <p><strong>Precio Alquiler:</strong> $3.00 (VHS)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade bb-video-modal" id="modalMIB" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content bb-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color: #FFCC00; font-weight: bold;">Hombres de Negro (1997)</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button>
-                </div>
-                <div class="modal-body" style="color: white; background-color: #001A5E;">
-                    <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 20px; border: 2px solid #FFCC00; border-radius: 5px;">
-                        <iframe class="embed-responsive-item" src="" data-src="https://www.youtube.com/embed/UxUTTrU6PA4" allowfullscreen></iframe>
-                    </div>
-                    <p><strong>Sinopsis:</strong> Dos agentes secretos deben cazar extraterrestres en Nueva York y evitar un desastre intergaláctico.</p>
-                    <p><strong>Género:</strong> Acción / Comedia</p>
-                    <p><strong>Precio Alquiler:</strong> $2.50 (VHS)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade bb-video-modal" id="modalBTTF" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content bb-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color: #FFCC00; font-weight: bold;">Volver al Futuro (1985)</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button>
-                </div>
-                <div class="modal-body" style="color: white; background-color: #001A5E;">
-                    <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 20px; border: 2px solid #FFCC00; border-radius: 5px;">
-                        <iframe class="embed-responsive-item" src="" data-src="https://www.youtube.com/embed/qvsgGtivCgs" allowfullscreen></iframe>
-                    </div>
-                    <p><strong>Sinopsis:</strong> Un adolescente es enviado accidentalmente 30 años al pasado en un DeLorean que viaja en el tiempo.</p>
-                    <p><strong>Género:</strong> Sci-Fi / Comedia</p>
-                    <p><strong>Precio Alquiler:</strong> $2.00 (CLÁSICO)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade bb-video-modal" id="modalMatrix" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content bb-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color: #FFCC00; font-weight: bold;">The Matrix (1999)</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button>
-                </div>
-                <div class="modal-body" style="color: white; background-color: #001A5E;">
-                    <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 20px; border: 2px solid #FFCC00; border-radius: 5px;">
-                        <iframe class="embed-responsive-item" src="" data-src="https://www.youtube.com/embed/vKQi3bBA1y8" allowfullscreen></iframe>
-                    </div>
-                    <p><strong>Sinopsis:</strong> Un hacker descubre que la realidad que conoce es una simulación creada por máquinas, y se une a la rebelión para liberar a la humanidad.</p>
-                    <p><strong>Género:</strong> Sci-Fi / Acción</p>
-                    <p><strong>Precio Alquiler:</strong> $3.50 (DVD)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade bb-video-modal" id="modalXF" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content bb-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color: #FFCC00; font-weight: bold;">Drake y Josh</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button>
-                </div>
-                <div class="modal-body" style="color: white; background-color: #001A5E;">
-                    <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 20px; border: 2px solid #FFCC00; border-radius: 5px;">
-                        <iframe class="embed-responsive-item" src="" data-src="https://www.youtube.com/embed/2_mBf5z_VTo" allowfullscreen></iframe>
-                    </div>
-                    <p><strong>Sinopsis:</strong> Dos hermanastros adolescentes con personalidades opuestas deben aprender a vivir bajo el mismo techo.</p>
-                    <p><strong>Género:</strong> Comedia</p>
-                    <p><strong>Precio Alquiler:</strong> $4.00 (Pack Temporada)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade bb-video-modal" id="modalFriends" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content bb-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color: #FFCC00; font-weight: bold;">Friends</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button>
-                </div>
-                <div class="modal-body" style="color: white; background-color: #001A5E;">
-                    <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 20px; border: 2px solid #FFCC00; border-radius: 5px;">
-                        <iframe class="embed-responsive-item" src="" data-src="https://www.youtube.com/embed/ki6Mbtnl_9I" allowfullscreen></iframe>
-                    </div>
-                    <p><strong>Sinopsis:</strong> Sigue las vidas, amores y risas de seis jóvenes amigos que viven en Manhattan.</p>
-                    <p><strong>Género:</strong> Comedia (Sitcom)</p>
-                    <p><strong>Precio Alquiler:</strong> $3.50 (Pack Temporada)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade bb-video-modal" id="modalMalcolm" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content bb-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color: #FFCC00; font-weight: bold;">Malcolm el de en medio</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button>
-                </div>
-                <div class="modal-body" style="color: white; background-color: #001A5E;">
-                    <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 20px; border: 2px solid #FFCC00; border-radius: 5px;">
-                        <iframe class="embed-responsive-item" src="" data-src="https://www.youtube.com/embed/PfID_33TL_A" allowfullscreen></iframe>
-                    </div>
-                    <p><strong>Sinopsis:</strong> Un niño prodigio intenta sobrevivir a su excéntrica y disfuncional familia de clase media.</p>
-                    <p><strong>Género:</strong> Comedia</p>
-                    <p><strong>Precio Alquiler:</strong> $3.50 (Pack Temporada)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade bb-video-modal" id="modalPrincipe" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content bb-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color: #FFCC00; font-weight: bold;">El Príncipe del Rap</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: white;">&times;</span></button>
-                </div>
-                <div class="modal-body" style="color: white; background-color: #001A5E;">
-                    <div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 20px; border: 2px solid #FFCC00; border-radius: 5px;">
-                        <iframe class="embed-responsive-item" src="" data-src="https://www.youtube.com/embed/1nCqRmx3Dnw" allowfullscreen></iframe>
-                    </div>
-                    <p><strong>Sinopsis:</strong> Un joven de Filadelfia es enviado a vivir con sus tíos ricos en Bel-Air, chocando con su estilo de vida.</p>
-                    <p><strong>Género:</strong> Comedia</p>
-                    <p><strong>Precio Alquiler:</strong> $3.00 (Pack Temporada)</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php endforeach; ?>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
