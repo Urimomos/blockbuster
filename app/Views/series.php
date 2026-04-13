@@ -2,33 +2,6 @@
 
 <?= $this->section('content') ?>
 
-<style>
-    /* Estilo para que el título sea visible sobre el fondo oscuro */
-    .product__page__title h4 { color: #FFCC00 !important; font-weight: 800; text-transform: uppercase; }
-
-    .product__item__pic, .product__sidebar__view__item { 
-        cursor: pointer; 
-        transition: transform 0.3s ease, box-shadow 0.3s ease !important; 
-    }
-    .product__item__pic:hover { 
-        transform: scale(1.05); 
-        box-shadow: 0px 0px 15px #FFCC00; 
-        border: 2px solid #FFCC00 !important; 
-    }
-    .bb-search-bar {
-        background-color: #001A5E; border: 2px solid #FFCC00; color: white;
-        border-radius: 5px; padding: 10px 15px; width: 100%; font-weight: bold;
-    }
-    .nav-tabs.bb-custom-tabs { border-bottom: none !important; justify-content: flex-end; }
-    .nav-tabs.bb-custom-tabs .nav-link { color: #b3b3b3 !important; border: none !important; background: transparent !important; font-weight: 600; }
-    .nav-tabs.bb-custom-tabs .nav-link.active { color: #FFCC00 !important; border-bottom: 2px solid #FFCC00 !important; }
-    
-    /* Estilos de Modales */
-    .modal-content { background-color: #001A5E; color: white; border: 2px solid #FFCC00; }
-    .modal-body p { margin-bottom: 5px; font-size: 14px; }
-    .modal-body strong { color: #FFCC00; }
-</style>
-
 <section class="product-page spad">
     <div class="container">
         <div class="row">

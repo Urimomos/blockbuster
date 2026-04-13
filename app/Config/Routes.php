@@ -8,8 +8,8 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->view('/login', 'login');
 $routes->view('/registro', 'signup'); 
-$routes->view('/categorias/peliculas', 'categories');
-$routes->view('/categorias/series', 'series');
+$routes->get('/categorias/peliculas', 'Categorias::peliculas');
+$routes->get('/categorias/series', 'Categorias::series');
 $routes->view('/detalles', 'streaming_detalles');
 $routes->get('/buscar', 'Home::buscar');
 
