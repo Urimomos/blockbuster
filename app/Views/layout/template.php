@@ -199,7 +199,8 @@
                                     </ul>
                                 </li>
                                 
-                                <li id="nav-planes"><a href="/planes">Planes</a></li>
+                                
+                                <li><a href="<?= base_url('planes') ?>">Planes</a></li>
                                 <li><a href="#" class="search-switch"><span class="icon_search"></span></a></li>
                             </ul>
                         </nav>
