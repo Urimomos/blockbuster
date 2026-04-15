@@ -88,6 +88,15 @@
             background-color: #dc3545 !important; /* Rojo peligro al pasar el mouse */
             color: white !important;
         }
+        /* Efecto Hover para las Tarjetas del Dashboard */
+        .card-hover {
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px); /* Levanta la tarjeta */
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15) !important; /* Sombra más grande */
+        }
 
     </style>
 </head>
@@ -101,21 +110,21 @@
             </div>
             
             <ul class="list-unstyled mt-3">
-                <li><a href="<?= base_url('admin/dashboard') ?>" class="active"><i class="fa fa-dashboard mr-2"></i> Dashboard</a></li>
+                <li><a href="<?= base_url('admin/dashboard') ?>" class="<?= url_is('admin/dashboard*') ? 'active' : '' ?>"><i class="fa fa-dashboard mr-2"></i> Dashboard</a></li>
                 
                 <?php if(session()->get('id_rol') == 745): ?>
                     <li class="px-3 mt-4 text-uppercase menu-section-title">Módulos Admon</li>
-                    <li><a href="<?= base_url('admin/usuarios') ?>"><i class="fa fa-users mr-2"></i> Usuarios</a></li>
-                    <li><a href="<?= base_url('admin/generos') ?>"><i class="fa fa-tags mr-2"></i> Tipos de Géneros</a></li>
-                    <li><a href="<?= base_url('admin/planes') ?>"><i class="fa fa-credit-card mr-2"></i> Planes</a></li>
-                    <li><a href="<?= base_url('admin/streaming') ?>"><i class="fa fa-film mr-2"></i> Streaming</a></li>
-                    <li><a href="<?= base_url('admin/videos') ?>"><i class="fa fa-play-circle mr-2"></i> Videos</a></li>
+                    <li><a href="<?= base_url('admin/usuarios') ?>" class="<?= url_is('admin/usuarios*') ? 'active' : '' ?>"><i class="fa fa-users mr-2"></i> Usuarios</a></li>
+                    <li><a href="<?= base_url('admin/generos') ?>" class="<?= url_is('admin/generos*') ? 'active' : '' ?>"><i class="fa fa-tags mr-2"></i> Tipos de Géneros</a></li>
+                    <li><a href="<?= base_url('admin/planes') ?>" class="<?= url_is('admin/planes*') ? 'active' : '' ?>"><i class="fa fa-credit-card mr-2"></i> Planes</a></li>
+                    <li><a href="<?= base_url('admin/streaming') ?>" class="<?= url_is('admin/streaming*') ? 'active' : '' ?>"><i class="fa fa-film mr-2"></i> Streaming</a></li>
+                    <li><a href="<?= base_url('admin/videos') ?>" class="<?= url_is('admin/videos*') ? 'active' : '' ?>"><i class="fa fa-play-circle mr-2"></i> Videos</a></li>
                 <?php endif; ?>
 
                 <?php if(session()->get('id_rol') == 125): ?>
                     <li class="px-3 mt-4 text-uppercase menu-section-title">Módulos Operador</li>
-                    <li><a href="<?= base_url('admin/clientes') ?>"><i class="fa fa-user mr-2"></i> Clientes</a></li>
-                    <li><a href="<?= base_url('admin/pagos') ?>"><i class="fa fa-money mr-2"></i> Validar Pagos</a></li>
+                    <li><a href="<?= base_url('admin/clientes') ?>" class="<?= url_is('admin/clientes*') ? 'active' : '' ?>"><i class="fa fa-user mr-2"></i> Clientes</a></li>
+                    <li><a href="<?= base_url('admin/pagos') ?>" class="<?= url_is('admin/pagos*') ? 'active' : '' ?>"><i class="fa fa-money mr-2"></i> Validar Pagos</a></li>
                 <?php endif; ?>
 
                 <li class="mt-5"><a href="<?= base_url('logout') ?>" class="logout-btn"><i class="fa fa-sign-out mr-2"></i> Cerrar Sesión</a></li>

@@ -208,14 +208,14 @@
                 </div>
                 <div class="col-lg-2">
                     <div class="header__right d-flex align-items-center justify-content-end">
-                        <?php if(session()->get('is_logged_in')): ?>
-                            <a href="/perfil" style="margin-left: 10px;"><span class="icon_profile"></span> Mi Perfil</a>
-                            <a href="/logout" class="text-danger" style="margin-left: 20px; color: #ff4d4d !important;" title="Cerrar Sesión"><i class="fa fa-sign-out"></i></a>
-                        <?php else: ?>
-                            <a href="/login" style="margin-left: 10px;">Entrar</a>
-                            <a href="/registro" class="bb-btn-register" style="margin-left: 20px;">Registrarse</a>
-                        <?php endif; ?>
-                    </div>
+                         <?php if(session()->get('is_logged_in')): ?>
+                            <a href="<?= base_url('perfil') ?>" style="margin-left: 10px;"><span class="icon_profile"></span> Mi Perfil</a>
+                            <a href="<?= base_url('logout') ?>" class="text-danger" style="margin-left: 20px; color: #ff4d4d !important;" title="Cerrar Sesión"><i class="fa fa-sign-out"></i></a>
+                            <?php else: ?>
+                            <a href="<?= base_url('login') ?>" style="margin-left: 10px;">Entrar</a>
+                            <a href="<?= base_url('registro') ?>" class="bb-btn-register" style="margin-left: 20px;">Registrarse</a>
+                 <?php endif; ?>
+                </div>
                 </div>
             </div>
             <div id="mobile-menu-wrap"></div>

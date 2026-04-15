@@ -5,29 +5,53 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+
+// ==========================================
+// RUTAS PÚBLICAS
+// ==========================================
 $routes->get('/', 'Home::index');
-$routes->view('/login', 'login');
+$routes->get('/buscar', 'Home::buscar');
+$routes->get('/planes', 'Home::planes');
+
 $routes->view('/registro', 'signup'); 
 $routes->get('/categorias/peliculas', 'Categorias::peliculas');
 $routes->get('/categorias/series', 'Categorias::series');
-$routes->view('/detalles', 'streaming_detalles');
-$routes->get('/buscar', 'Home::buscar');
+$routes->get('/detalles/(:num)', 'Detalles::index/$1'); 
 
-$routes->get('/planes', 'Home::planes');
-
-$routes->get('/login', 'Login::index');
-
+// Checkout
 $routes->get('/checkout/(:num)', 'Checkout::index/$1');
 $routes->post('/checkout/procesar', 'Checkout::procesar');
 
+// ==========================================
+// RUTAS DEL PERFIL DE USUARIO (¡Estas faltaban!)
+// ==========================================
+$routes->get('/perfil', 'Perfil::index');
+$routes->post('/perfil/actualizar', 'Perfil::actualizar');
+$routes->post('/perfil/subir_foto', 'Perfil::subir_foto');
+
+
+// ==========================================
+// RUTAS DE AUTENTICACIÓN (LOGIN)
+// ==========================================
+$routes->get('/login', 'Login::index');
+$routes->post('/login/autenticar', 'Login::autenticar');
+$routes->get('/logout', 'Login::logout');
+
+
+// ==========================================
+// RUTAS DEL PANEL ADMINISTRADOR
+// ==========================================
+$routes->get('/admin/dashboard', 'Login::dashboard'); 
+
+// CRUD DE USUARIOS
+$routes->get('/admin/usuarios', 'Usuarios::index');
+$routes->post('/admin/usuarios/guardar', 'Usuarios::guardar');
+$routes->post('/admin/usuarios/actualizar', 'Usuarios::actualizar');
+
+// CRUD DE GÉNEROS
 $routes->get('/admin/generos', 'Generos::index');
 $routes->post('/admin/generos/guardar', 'Generos::guardar');
 $routes->post('/admin/generos/actualizar', 'Generos::actualizar');
-
-// ==========================================
-// RUTAS DEL PANEL ADMINISTRABLE
-// ==========================================
-$routes->get('/admin/dashboard', 'Login::dashboard'); // La que ya teníamos de prueba
 
 // CRUD DE PLANES
 $routes->get('/admin/planes', 'Planes::index');
@@ -37,21 +61,20 @@ $routes->get('/admin/planes/editar/(:num)', 'Planes::editar/$1');
 $routes->post('/admin/planes/actualizar/(:num)', 'Planes::actualizar/$1');
 $routes->get('/admin/planes/cambiar_estatus/(:num)/(:any)', 'Planes::cambiar_estatus/$1/$2');
 
-$routes->get('/admin/usuarios', 'Usuarios::index');
-$routes->post('/admin/usuarios/guardar', 'Usuarios::guardar');
-$routes->post('/admin/usuarios/actualizar', 'Usuarios::actualizar');
+// CRUD DE STREAMING
+$routes->get('/admin/streaming', 'Streaming::index');
+$routes->get('/admin/streaming/crear', 'Streaming::crear');
+$routes->post('/admin/streaming/guardar', 'Streaming::guardar');
+$routes->get('/admin/streaming/editar/(:num)', 'Streaming::editar/$1');
+$routes->post('/admin/streaming/actualizar/(:num)', 'Streaming::actualizar/$1');
+$routes->get('/admin/streaming/eliminar/(:num)', 'Streaming::eliminar/$1');
+$routes->get('/admin/streaming/cambiar_estatus/(:num)/(:any)', 'Streaming::cambiar_estatus/$1/$2');
 
-// Procesar el formulario cuando se le da clic a "Entrar"
-$routes->post('/login/autenticar', 'Login::autenticar');
-
-// Cerrar sesión
-$routes->get('/logout', 'Login::logout');
-
-// Ruta protegida de prueba para el administrador
-$routes->get('/admin/dashboard', function() {
-    // Pequeño candado de seguridad: si no hay sesión, regresalo al login
-    if (!session()->get('is_logged_in')) {
-        return redirect()->to(base_url('login'));
-    }
-    return view('admin/dashboard');
-});
+// CRUD DE VIDEOS
+$routes->get('/admin/videos', 'Videos::index');
+$routes->get('/admin/videos/crear', 'Videos::crear');
+$routes->post('/admin/videos/guardar', 'Videos::guardar');
+$routes->get('/admin/videos/editar/(:num)', 'Videos::editar/$1');
+$routes->post('/admin/videos/actualizar/(:num)', 'Videos::actualizar/$1');
+$routes->get('/admin/videos/cambiar_estatus/(:num)/(:any)', 'Videos::cambiar_estatus/$1/$2');
+$routes->get('/admin/videos/eliminar/(:num)', 'Videos::eliminar/$1');
