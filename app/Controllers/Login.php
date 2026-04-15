@@ -76,4 +76,15 @@ class Login extends BaseController
         session()->destroy();
         return redirect()->to(base_url('login'));
     }
+    // Función para mostrar el Panel Administrador
+    public function dashboard()
+    {
+        // Candado de seguridad: si no ha iniciado sesión, lo manda al login
+        if (!session()->get('is_logged_in')) {
+            return redirect()->to(base_url('login'));
+        }
+
+        // Si todo está bien, muestra la vista del panel
+        return view('admin/dashboard');
+    }
 }
