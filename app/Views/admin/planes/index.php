@@ -1,4 +1,4 @@
- <?= $this->extend('admin/layout/template') ?>
+<?= $this->extend('admin/layout/template') ?>
 
 <?= $this->section('content') ?>
 
@@ -68,7 +68,7 @@
                                 </a>
                                 
                                 <?php if($plan['estatus_plan'] == 1): ?>
-                                    <a href="<?= base_url('admin/planes/cambiar_estatus/'.$plan['id_plan'].'/-1') ?>" class="btn btn-sm btn-outline-danger" title="Deshabilitar">
+                                    <a href="<?= base_url('admin/planes/cambiar_estatus/'.$plan['id_plan'].'/-1') ?>" class="btn btn-sm btn-outline-warning" title="Deshabilitar">
                                         <i class="fa fa-ban"></i>
                                     </a>
                                 <?php else: ?>
@@ -76,6 +76,10 @@
                                         <i class="fa fa-check"></i>
                                     </a>
                                 <?php endif; ?>
+
+                                <a href="<?= base_url('admin/planes/eliminar/'.$plan['id_plan']) ?>" class="btn btn-sm btn-danger" title="Eliminar" onclick="return confirm('¿Estás seguro de eliminar este plan? Esta acción no se puede deshacer.');">
+                                    <i class="fa fa-trash"></i>
+                                </a>
                             </td>
                         </tr>
                     <?php endforeach; else: ?>

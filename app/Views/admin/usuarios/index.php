@@ -53,7 +53,11 @@
                                 data-email="<?= esc($u['email_usuario']) ?>"
                                 data-rol="<?= $u['id_rol'] ?>"
                                 data-estatus="<?= $u['estatus_usuario'] ?>"
-                                data-toggle="modal" data-target="#modalEditar"><i class="fa fa-edit"></i></button>
+                                data-toggle="modal" data-target="#modalEditar" title="Editar"><i class="fa fa-edit"></i></button>
+                            
+                            <a href="<?= base_url('admin/usuarios/eliminar/'.$u['id_usuario']) ?>" class="btn btn-sm btn-danger" title="Eliminar" onclick="return confirm('¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.');">
+                                <i class="fa fa-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     <?php endforeach; else: ?>

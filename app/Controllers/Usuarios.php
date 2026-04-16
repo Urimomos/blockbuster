@@ -70,4 +70,14 @@ class Usuarios extends BaseController {
         $usuarioModel->update($id_usuario, $data);
         return redirect()->to(base_url('admin/usuarios'))->with('mensaje', 'Usuario actualizado correctamente.');
     }
+    public function eliminar($id = null)
+    {
+        // Candado de seguridad
+        if (session()->get('id_rol') != 745) return redirect()->to(base_url('admin/dashboard'));
+        
+        $usuarioModel = new \App\Models\UsuarioModel();
+        $usuarioModel->delete($id);
+        
+        return redirect()->to(base_url('admin/usuarios'))->with('mensaje', 'Usuario eliminado permanentemente.');
+    }
 }

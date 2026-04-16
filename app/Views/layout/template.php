@@ -167,6 +167,16 @@
             color: #ffffff !important;
             text-shadow: 0px 4px 10px rgba(0,0,0,0.8);
         }
+        /* Parche para que la foto sea circular perfecta y no se estire */
+#user-profile-img {
+    aspect-ratio: 1 / 1; /* Obliga a que sea un cuadrado perfecto antes de redondear */
+    min-width: 45px;
+    max-width: 45px;
+    min-height: 45px;
+    max-height: 45px;
+    object-fit: cover !important;
+    object-position: center;
+}
     </style>
     
 </head>
@@ -199,8 +209,7 @@
                                     </ul>
                                 </li>
                                 
-                                
-                                <li><a href="<?= base_url('planes') ?>">Planes</a></li>
+                                <li id="nav-planes"><a href="<?= base_url('planes') ?>">Planes</a></li>
                                 <li><a href="#" class="search-switch"><span class="icon_search"></span></a></li>
                             </ul>
                         </nav>
@@ -208,14 +217,35 @@
                 </div>
                 <div class="col-lg-2">
                     <div class="header__right d-flex align-items-center justify-content-end">
-                         <?php if(session()->get('is_logged_in')): ?>
-                            <a href="<?= base_url('perfil') ?>" style="margin-left: 10px;"><span class="icon_profile"></span> Mi Perfil</a>
-                            <a href="<?= base_url('logout') ?>" class="text-danger" style="margin-left: 20px; color: #ff4d4d !important;" title="Cerrar Sesión"><i class="fa fa-sign-out"></i></a>
-                            <?php else: ?>
+                        
+                        <?php if(session()->get('is_logged_in')): ?>
+                            <div class="d-flex align-items-center justify-content-end">
+                                <a href="<?= base_url('perfil') ?>" class="d-flex align-items-center text-white mr-4" style="text-decoration: none;">
+                                    
+                                   <?php if(session()->get('imagen_usuario')): ?>
+    <img src="<?= base_url('img/perfiles/' . session()->get('imagen_usuario')) ?>" 
+         id="user-profile-img"
+         class="rounded-circle mr-2 shadow-sm" 
+         style="width: 45px !important; height: 45px !important; object-fit: cover !important; border: 2px solid #ffcc00; display: inline-block;">
+<?php else: ?>
+    <i class="fa fa-user-circle mr-2" style="font-size: 35px; color: #ffcc00;"></i> 
+<?php endif; ?>
+                                    
+                                    <span class="font-weight-bold" style="white-space: nowrap; font-size: 16px;">
+                                        <?= esc(session()->get('nombre')) ?>
+                                    </span>
+                                </a>
+                                
+                                <a href="<?= base_url('login/salir') ?>" title="Cerrar Sesión" class="d-flex align-items-center">
+                                    <i class="fa fa-sign-out text-danger" style="font-size: 28px;"></i>
+                                </a>
+                            </div>
+                        <?php else: ?>
                             <a href="<?= base_url('login') ?>" style="margin-left: 10px;">Entrar</a>
                             <a href="<?= base_url('registro') ?>" class="bb-btn-register" style="margin-left: 20px;">Registrarse</a>
-                 <?php endif; ?>
-                </div>
+                        <?php endif; ?>
+
+                    </div>
                 </div>
             </div>
             <div id="mobile-menu-wrap"></div>
@@ -281,17 +311,17 @@
             var navPlanes = document.getElementById('nav-planes');
 
             // Limpiamos todo
-            navInicio.classList.remove('active');
-            navCategorias.classList.remove('active');
-            navPlanes.classList.remove('active');
+            if (navInicio) navInicio.classList.remove('active');
+            if (navCategorias) navCategorias.classList.remove('active');
+            if (navPlanes) navPlanes.classList.remove('active');
 
             // Lógica para decidir cuál pintar de amarillo
             if (currentPath.includes('categorias')) {
-                navCategorias.classList.add('active');
+                if (navCategorias) navCategorias.classList.add('active');
             } else if (currentPath.includes('planes')) {
-                navPlanes.classList.add('active');
+                if (navPlanes) navPlanes.classList.add('active');
             } else {
-                navInicio.classList.add('active');
+                if (navInicio) navInicio.classList.add('active');
             }
         });
     </script>

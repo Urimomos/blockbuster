@@ -13,7 +13,12 @@
                     <h2 class="font-weight-bold mb-2" style="color: #ffcc00;">¡Hola, <?= session()->get('nombre') ?>!</h2>
                     <p class="mb-0 text-light" style="font-size: 1.1rem;">
                         Bienvenido al centro de control principal de <strong>Blockbuster</strong>. 
-                        Desde aquí tienes el control total para gestionar el catálogo, los usuarios y los planes de la plataforma.
+                        
+                        <?php if(session()->get('id_rol') == 745): ?>
+                            Desde aquí tienes el control total para gestionar el catálogo, los usuarios y los planes de la plataforma.
+                        <?php elseif(session()->get('id_rol') == 125): ?>
+                            Desde aquí puedes brindar soporte a las cuentas de los clientes y validar sus pagos para mantener sus suscripciones activas.
+                        <?php endif; ?>
                     </p>
                 </div>
             </div>
@@ -23,73 +28,113 @@
 
 <div class="row mb-4">
     
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-0 shadow-sm h-100 py-2 card-hover" style="border-left: 4px solid #17a2b8 !important;" onclick="window.location.href='<?= base_url('admin/usuarios') ?>'">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Módulo de</div>
-                        <div class="h5 mb-0 font-weight-bold text-dark">Usuarios</div>
-                        <span class="text-muted small mt-2 d-inline-block">Gestionar <i class="fa fa-arrow-right"></i></span>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fa fa-users fa-2x text-muted" style="opacity: 0.3;"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php if(session()->get('id_rol') == 745): ?>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-0 shadow-sm h-100 py-2 card-hover" style="border-left: 4px solid #dc3545 !important;" onclick="window.location.href='<?= base_url('admin/streaming') ?>'">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Catálogo de</div>
-                        <div class="h5 mb-0 font-weight-bold text-dark">Streaming</div>
-                        <span class="text-muted small mt-2 d-inline-block">Gestionar <i class="fa fa-arrow-right"></i></span>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fa fa-film fa-2x text-muted" style="opacity: 0.3;"></i>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100 py-2 card-hover" style="border-left: 4px solid #17a2b8 !important;" onclick="window.location.href='<?= base_url('admin/usuarios') ?>'">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Módulo de</div>
+                            <div class="h5 mb-0 font-weight-bold text-dark">Usuarios</div>
+                            <span class="text-muted small mt-2 d-inline-block">Gestionar <i class="fa fa-arrow-right"></i></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-users fa-2x text-muted" style="opacity: 0.3;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-0 shadow-sm h-100 py-2 card-hover" style="border-left: 4px solid #28a745 !important;" onclick="window.location.href='<?= base_url('admin/videos') ?>'">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Archivos de</div>
-                        <div class="h5 mb-0 font-weight-bold text-dark">Videos</div>
-                        <span class="text-muted small mt-2 d-inline-block">Gestionar <i class="fa fa-arrow-right"></i></span>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fa fa-play-circle fa-2x text-muted" style="opacity: 0.3;"></i>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100 py-2 card-hover" style="border-left: 4px solid #dc3545 !important;" onclick="window.location.href='<?= base_url('admin/streaming') ?>'">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Catálogo de</div>
+                            <div class="h5 mb-0 font-weight-bold text-dark">Streaming</div>
+                            <span class="text-muted small mt-2 d-inline-block">Gestionar <i class="fa fa-arrow-right"></i></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-film fa-2x text-muted" style="opacity: 0.3;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-0 shadow-sm h-100 py-2 card-hover" style="border-left: 4px solid #ffcc00 !important;" onclick="window.location.href='<?= base_url('admin/planes') ?>'">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="color: #d39e00 !important;">Suscripciones y</div>
-                        <div class="h5 mb-0 font-weight-bold text-dark">Planes</div>
-                        <span class="text-muted small mt-2 d-inline-block">Gestionar <i class="fa fa-arrow-right"></i></span>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fa fa-credit-card fa-2x text-muted" style="opacity: 0.3;"></i>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100 py-2 card-hover" style="border-left: 4px solid #28a745 !important;" onclick="window.location.href='<?= base_url('admin/videos') ?>'">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Archivos de</div>
+                            <div class="h5 mb-0 font-weight-bold text-dark">Videos</div>
+                            <span class="text-muted small mt-2 d-inline-block">Gestionar <i class="fa fa-arrow-right"></i></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-play-circle fa-2x text-muted" style="opacity: 0.3;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100 py-2 card-hover" style="border-left: 4px solid #ffcc00 !important;" onclick="window.location.href='<?= base_url('admin/planes') ?>'">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="color: #d39e00 !important;">Suscripciones y</div>
+                            <div class="h5 mb-0 font-weight-bold text-dark">Planes</div>
+                            <span class="text-muted small mt-2 d-inline-block">Gestionar <i class="fa fa-arrow-right"></i></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-credit-card fa-2x text-muted" style="opacity: 0.3;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <?php elseif(session()->get('id_rol') == 125): ?>
+        
+        <div class="col-xl-6 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100 py-2 card-hover" style="border-left: 4px solid #17a2b8 !important;" onclick="window.location.href='<?= base_url('admin/clientes') ?>'">
+                <div class="card-body p-4">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Directorio de</div>
+                            <div class="h4 mb-0 font-weight-bold text-dark">Clientes</div>
+                            <span class="text-muted small mt-2 d-inline-block">Dar soporte técnico <i class="fa fa-arrow-right"></i></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-users fa-3x text-muted" style="opacity: 0.3;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100 py-2 card-hover" style="border-left: 4px solid #28a745 !important;" onclick="window.location.href='<?= base_url('admin/pagos') ?>'">
+                <div class="card-body p-4">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Módulo de</div>
+                            <div class="h4 mb-0 font-weight-bold text-dark">Validar Pagos</div>
+                            <span class="text-muted small mt-2 d-inline-block">Revisar comprobantes <i class="fa fa-arrow-right"></i></span>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-money fa-3x text-muted" style="opacity: 0.3;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <?php endif; ?>
 
 </div>
 

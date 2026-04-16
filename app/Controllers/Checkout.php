@@ -28,53 +28,49 @@ class Checkout extends BaseController
         return view('checkout', $datos);
     }
 
-    public function procesar()
-    {
-        if (!session()->get('is_logged_in')) return redirect()->to(base_url('login'));
+   public function procesar()
+{
+    if (!session()->get('is_logged_in')) return redirect()->to(base_url('login'));
 
-        $id_usuario = session()->get('id_usuario');
-        $id_plan = $this->request->getPost('id_plan');
-        $tarjeta = $this->request->getPost('tarjeta_pago'); // Enmascararemos esto por seguridad
+    $id_usuario = session()->get('id_usuario');
+    $id_plan = $this->request->getPost('id_plan');
+    $tarjeta = $this->request->getPost('tarjeta_pago');
 
-        $planModel = new PlanModel();
-        $pagoModel = new PagoModel();
-        $usuarioPlanModel = new UsuarioPlanModel();
+    $planModel = new PlanModel();
+    $pagoModel = new PagoModel();
+    $usuarioPlanModel = new UsuarioPlanModel();
 
-        $plan = $planModel->find($id_plan);
-        $fecha_actual = date('Y-m-d');
+    $plan = $planModel->find($id_plan);
+    $fecha_actual = date('Y-m-d');
 
-        // Calcular fecha de vencimiento según tu BD (8=Semanal, 16=Mensual, 32=Anual)
-        $fecha_fin = '';
-        if ($plan['tipo_plan'] == 8) {
-            $fecha_fin = date('Y-m-d', strtotime($fecha_actual . ' + 7 days'));
-        } elseif ($plan['tipo_plan'] == 16) {
-            $fecha_fin = date('Y-m-d', strtotime($fecha_actual . ' + 1 month'));
-        } elseif ($plan['tipo_plan'] == 32) {
-            $fecha_fin = date('Y-m-d', strtotime($fecha_actual . ' + 1 year'));
-        }
+    // Cálculo de fechas (igual que antes)
+    $fecha_fin = '';
+    if ($plan['tipo_plan'] == 8) { $fecha_fin = date('Y-m-d', strtotime($fecha_actual . ' + 7 days')); }
+    elseif ($plan['tipo_plan'] == 16) { $fecha_fin = date('Y-m-d', strtotime($fecha_actual . ' + 1 month')); }
+    elseif ($plan['tipo_plan'] == 32) { $fecha_fin = date('Y-m-d', strtotime($fecha_actual . ' + 1 year')); }
 
-        // 1. Guardar el Pago (Simulando pago exitoso: estatus_pago = 1)
-        // Guardamos solo los últimos 4 dígitos por seguridad (Ej: ************1234)
-        $tarjeta_oculta = str_repeat('X', 12) . substr($tarjeta, -4);
+    $tarjeta_oculta = str_repeat('X', 12) . substr($tarjeta, -4);
 
-        $pagoModel->insert([
-            'fecha_registro_pago' => $fecha_actual,
-            'estatus_pago'        => 1, 
-            'monto_pago'          => $plan['precio_plan'],
-            'tarjeta_pago'        => $tarjeta_oculta,
-            'id_usuario'          => $id_usuario,
-            'id_plan'             => $id_plan
-        ]);
+    // 1. Guardar el Pago como PENDIENTE (estatus_pago = 0)
+    $pagoModel->insert([
+        'fecha_registro_pago' => $fecha_actual,
+        'estatus_pago'        => 0, // CAMBIO: Inicia en 0
+        'monto_pago'          => $plan['precio_plan'],
+        'tarjeta_pago'        => $tarjeta_oculta,
+        'id_usuario'          => $id_usuario,
+        'id_plan'             => $id_plan
+    ]);
 
-        // 2. Asignar el plan al usuario
-        $usuarioPlanModel->insert([
-            'fecha_registro_plan' => $fecha_actual,
-            'fecha_fin_plan'      => $fecha_fin,
-            'id_usuario'          => $id_usuario,
-            'id_plan'             => $id_plan
-        ]);
+    // 2. Asignar el plan al usuario como PENDIENTE
+    // Asegúrate de tener la columna 'estatus_usuario_plan' en tu tabla usuarios_planes
+    $usuarioPlanModel->insert([
+        'fecha_registro_plan' => $fecha_actual,
+        'fecha_fin_plan'      => $fecha_fin,
+        'id_usuario'          => $id_usuario,
+        'id_plan'             => $id_plan,
+        'estatus_usuario_plan' => 0 // CAMBIO: Inicia en 0
+    ]);
 
-        // Redirigir al inicio con éxito
-        return redirect()->to(base_url('/'))->with('mensaje_exito', '¡Felicidades! Tu pago fue procesado y tu plan está activo hasta el ' . $fecha_fin);
-    }
+    return redirect()->to(base_url('perfil'))->with('mensaje_exito', 'Tu pago está siendo procesado por un operador.');
+}
 }

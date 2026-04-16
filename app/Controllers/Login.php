@@ -9,7 +9,7 @@ class Login extends BaseController
     {
         return view('login');
     }
-    public function autenticar()
+ public function autenticar()
     {
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
@@ -24,12 +24,13 @@ class Login extends BaseController
 
         if ($usuario) {
             session()->set([
-                'is_logged_in' => true,
-                'id_usuario'   => $usuario['id_usuario'],
-                'nombre'       => $usuario['nombre_usuario'] . ' ' . $usuario['ap_usuario'],
-                'email'        => $usuario['email_usuario'],
-                'id_rol'       => $usuario['id_rol'],
-                'rol_nombre'   => $usuario['nombre_rol'] 
+                'is_logged_in'   => true,
+                'id_usuario'     => $usuario['id_usuario'],
+                'nombre'         => $usuario['nombre_usuario'] . ' ' . $usuario['ap_usuario'],
+                'email'          => $usuario['email_usuario'],
+                'id_rol'         => $usuario['id_rol'],
+                'rol_nombre'     => $usuario['nombre_rol'],
+                'imagen_usuario' => $usuario['imagen_usuario'] // <-- ¡ESTA ES LA LÍNEA MÁGICA!
             ]);
 
             if ($usuario['id_rol'] == 745 || $usuario['id_rol'] == 125) {

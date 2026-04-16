@@ -77,19 +77,41 @@
                     <div class="card-body p-4 text-center">
                         <h4 class="text-white mb-3">Mi Suscripción</h4>
                         
-                        <div class="p-3 rounded mb-3" style="background-color: #2b2d5c; border: 1px dashed #FFCC00;">
-                            <span class="badge badge-success mb-2">ACTIVA</span>
-                            <h3 class="text-white font-weight-bold" style="color: #FFCC00 !important;">Prémium</h3>
-                            <p class="text-light mt-2 mb-0">Disfrutando de 4 pantallas y 4K UHD.</p>
-                        </div>
+                        <?php if(!empty($mi_plan)): ?>
 
-                        <ul class="list-unstyled text-left text-light mb-4" style="line-height: 2;">
-                            <li><i class="fa fa-check text-success mr-2"></i> Sin anuncios</li>
-                            <li><i class="fa fa-check text-success mr-2"></i> Calidad 4K+HDR</li>
-                            <li><i class="fa fa-check text-success mr-2"></i> Descargas offline</li>
-                        </ul>
+                            <?php if($mi_plan['estatus_usuario_plan'] == 1): ?>
+                                <div class="p-3 rounded mb-3" style="background-color: #2b2d5c; border: 1px solid #28a745;">
+                                    <span class="badge badge-success mb-2">ACTIVA</span>
+                                    <h3 class="text-white font-weight-bold text-success"><?= esc($mi_plan['nombre_plan']) ?></h3>
+                                </div>
+                                <ul class="list-unstyled text-left text-light mb-4" style="line-height: 2;">
+                                    <li><i class="fa fa-check text-success mr-2"></i> Límite de <?= $mi_plan['cantidad_limite_plan'] ?> pantallas</li>
+                                    <li><i class="fa fa-check text-success mr-2"></i> Acceso total al catálogo</li>
+                                </ul>
 
-                        <a href="<?= base_url('planes') ?>" class="btn btn-outline-info btn-block text-white">Cambiar de Plan</a>
+                            <?php elseif($mi_plan['estatus_usuario_plan'] == 0): ?>
+                                <div class="p-3 rounded mb-3" style="background-color: #2b2d5c; border: 1px dashed #ffcc00;">
+                                    <span class="badge badge-warning mb-2 text-dark">EN REVISIÓN</span>
+                                    <h3 class="text-white font-weight-bold" style="color: #ffcc00 !important;"><?= esc($mi_plan['nombre_plan']) ?></h3>
+                                    <p class="text-muted small mb-0 mt-2">Un operador está validando tu pago. Pronto tendrás acceso.</p>
+                                </div>
+
+                            <?php else: ?>
+                                <div class="p-3 rounded mb-3" style="background-color: #2b2d5c; border: 1px solid #dc3545;">
+                                    <span class="badge badge-danger mb-2">PAGO RECHAZADO</span>
+                                    <h3 class="text-white font-weight-bold text-danger"><?= esc($mi_plan['nombre_plan']) ?></h3>
+                                    <p class="text-muted small mb-0 mt-2">Hubo un problema con tu pago. Contacta a soporte.</p>
+                                </div>
+                            <?php endif; ?>
+
+                        <?php else: ?>
+                            <div class="p-3 rounded mb-4" style="background-color: #2b2d5c; border: 1px dashed #6c757d;">
+                                <i class="fa fa-frown-o fa-3x text-muted mb-2"></i>
+                                <h5 class="text-muted mt-2">Aún no tienes un plan</h5>
+                            </div>
+                        <?php endif; ?>
+
+                        <a href="<?= base_url('planes') ?>" class="btn btn-outline-info btn-block text-white mt-4">Ver Catálogo de Planes</a>
                     </div>
                 </div>
             </div>

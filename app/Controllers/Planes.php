@@ -94,4 +94,13 @@ class Planes extends BaseController
         
         return redirect()->to(base_url('admin/planes'));
     }
+    public function eliminar($id = null)
+    {
+        if (session()->get('id_rol') != 745) return redirect()->to(base_url('admin/dashboard'));
+        
+        $planesModel = new \App\Models\PlanesModel(); // Asegúrate de que así se llame tu modelo de planes
+        $planesModel->delete($id);
+        
+        return redirect()->to(base_url('admin/planes'))->with('mensaje', 'Plan eliminado permanentemente.');
+    }
 }

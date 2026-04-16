@@ -34,4 +34,13 @@ class Generos extends BaseController {
         
         return redirect()->to(base_url('admin/generos'))->with('mensaje', 'Género actualizado correctamente.');
     }
+    public function eliminar($id = null)
+    {
+        if (session()->get('id_rol') != 745) return redirect()->to(base_url('admin/dashboard'));
+        
+        $generoModel = new \App\Models\GeneroModel();
+        $generoModel->delete($id);
+        
+        return redirect()->to(base_url('admin/generos'))->with('mensaje', 'Género eliminado permanentemente.');
+    }
 }
