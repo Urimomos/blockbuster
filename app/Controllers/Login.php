@@ -72,11 +72,11 @@ class Login extends BaseController
         }
     }*/
 
-    public function logout()
-    {
-        session()->destroy();
-        return redirect()->to(base_url('login'));
-    }
+   public function logout() // <--- Debe llamarse logout
+{
+    session()->destroy();
+    return redirect()->to(base_url('login'));
+}
     // Función para mostrar el Panel Administrador
     public function dashboard()
     {

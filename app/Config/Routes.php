@@ -35,11 +35,12 @@ $routes->post('/perfil/subir_foto', 'Perfil::subir_foto');
 // ==========================================
 $routes->get('/login', 'Login::index');
 $routes->post('/login/autenticar', 'Login::autenticar');
-$routes->get('login/salir', 'Login::logout');
+$routes->get('login/salir', 'Login::logout'); // Para el portal público
+$routes->get('logout', 'Login::logout');
 
 
 // ==========================================
-// RUTAS DEL PANEL ADMINISTRADOR
+// RUTAS DEL PANEL ADMINISTRADOR 
 // ==========================================
 $routes->get('/admin/dashboard', 'Login::dashboard'); 
 
