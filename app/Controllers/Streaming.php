@@ -38,28 +38,37 @@ class Streaming extends BaseController
         return view('admin/streaming/crear', $datos);
     }
 
-    public function guardar()
+   public function guardar()
     {
         if (!$this->verificarAcceso()) return redirect()->to(base_url('admin/dashboard'));
 
         $streamingModel = new StreamingModel();
         
+        // Recogemos los valores
+        $duracion = $this->request->getPost('duracion_streaming');
+        $temporadas = $this->request->getPost('temporadas_streaming');
+
+        // LÓGICA DE LIMPIEZA: Si hay temporadas, anulamos la duración para que sea Serie pura
+        if (!empty($temporadas) && $temporadas > 0) {
+            $duracion = null;
+        }
+
         $datos = [
             'nombre_streaming'            => $this->request->getPost('nombre_streaming'),
             'fecha_lanzamiento_streaming' => $this->request->getPost('fecha_lanzamiento_streaming'),
             'fecha_estreno_streaming'     => $this->request->getPost('fecha_estreno_streaming'),
-            'duracion_streaming'          => $this->request->getPost('duracion_streaming') ?: null,
-            'temporadas_streaming'        => $this->request->getPost('temporadas_streaming') ?: null,
+            'duracion_streaming'          => $duracion ?: null,
+            'temporadas_streaming'        => $temporadas ?: null,
             'caratula_streaming'          => $this->request->getPost('caratula_streaming'),
             'trailer_streaming'           => $this->request->getPost('trailer_streaming'),
             'clasificacion_streaming'     => $this->request->getPost('clasificacion_streaming'),
             'sipnosis_streaming'          => $this->request->getPost('sipnosis_streaming'),
             'id_genero'                   => $this->request->getPost('id_genero'),
-            'estatus_streaming'           => 1 // Habilitado por defecto al crear
+            'estatus_streaming'           => 1 
         ];
 
         $streamingModel->insert($datos);
-        return redirect()->to(base_url('admin/streaming'))->with('mensaje', 'Título agregado correctamente al catálogo.');
+        return redirect()->to(base_url('admin/streaming'))->with('mensaje', 'Título agregado correctamente.');
     }
 
     // Cambiar estatus (Habilitar / Deshabilitar)
@@ -93,19 +102,26 @@ class Streaming extends BaseController
         return view('admin/streaming/editar', $datos);
     }
 
-    // --- 2. Procesar formulario de EDITAR ---
-    public function actualizar($id = null)
+   public function actualizar($id = null)
     {
         if (!$this->verificarAcceso()) return redirect()->to(base_url('admin/dashboard'));
 
         $streamingModel = new StreamingModel();
         
+        $duracion = $this->request->getPost('duracion_streaming');
+        $temporadas = $this->request->getPost('temporadas_streaming');
+
+        // LÓGICA DE LIMPIEZA: Priorizamos temporadas sobre duración
+        if (!empty($temporadas) && $temporadas > 0) {
+            $duracion = null;
+        }
+
         $datos = [
             'nombre_streaming'            => $this->request->getPost('nombre_streaming'),
             'fecha_lanzamiento_streaming' => $this->request->getPost('fecha_lanzamiento_streaming'),
             'fecha_estreno_streaming'     => $this->request->getPost('fecha_estreno_streaming'),
-            'duracion_streaming'          => $this->request->getPost('duracion_streaming') ?: null,
-            'temporadas_streaming'        => $this->request->getPost('temporadas_streaming') ?: null,
+            'duracion_streaming'          => $duracion ?: null,
+            'temporadas_streaming'        => $temporadas ?: null,
             'caratula_streaming'          => $this->request->getPost('caratula_streaming'),
             'trailer_streaming'           => $this->request->getPost('trailer_streaming'),
             'clasificacion_streaming'     => $this->request->getPost('clasificacion_streaming'),
