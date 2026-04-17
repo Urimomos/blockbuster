@@ -103,7 +103,7 @@
             </div>
             <div class="modal-body">
                 <div class="embed-responsive embed-responsive-16by9 mb-3" style="border: 2px solid #FFCC00; border-radius: 5px;">
-                    <iframe class="embed-responsive-item" src="" data-src="<?= base_url('videos/' . $item['trailer_streaming']) ?>" allowfullscreen></iframe>
+                    <iframe class="embed-responsive-item" src="" data-src="<?= esc($item['trailer_streaming']) ?>" allowfullscreen></iframe>
                 </div>
                 <p><strong>Sinopsis:</strong> <?= esc($item['sipnosis_streaming']) ?></p>
                 <p><strong>Género:</strong> <?= esc($item['nombre_genero']) ?> | <strong>Formato:</strong> <?= esc($duracion_texto) ?></p>

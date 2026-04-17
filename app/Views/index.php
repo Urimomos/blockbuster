@@ -92,14 +92,17 @@
 ?>
 <div class="modal fade bb-video-modal" id="modal-<?= $modal_item['id_streaming'] ?>" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content" style="background-color: #001A5E;"> <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <div class="modal-content" style="background-color: #001A5E;"> 
+            <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                 <h5 class="modal-title" style="color:#FFCC00; font-weight:bold;"><?= esc($modal_item['nombre_streaming']) ?></h5>
                 <button type="button" class="close" data-dismiss="modal" style="color:white; opacity: 1;">&times;</button>
             </div>
             <div class="modal-body" style="color: white;">
+                
                 <div class="embed-responsive embed-responsive-16by9 mb-3" style="border: 2px solid #FFCC00; border-radius: 5px;">
-                    <iframe class="embed-responsive-item" src="" data-src="<?= base_url('videos/' . $modal_item['trailer_streaming']) ?>" allowfullscreen></iframe>
+                    <iframe class="embed-responsive-item" src="<?= $modal_item['trailer_streaming'] ?>" frameborder="0" allowfullscreen></iframe>
                 </div>
+                
                 <p><strong>Descripción:</strong> <?= esc($modal_item['sipnosis_streaming']) ?></p>
                 <hr style="border-top: 1px solid rgba(255,255,255,0.2);">
                 <p>
@@ -119,13 +122,14 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Carga el video al abrir y lo quita al cerrar
-        $('.bb-video-modal').on('show.bs.modal', function () {
-            var iframe = $(this).find('iframe');
-            iframe.attr('src', iframe.data('src'));
-        });
+        // Solo actuamos cuando el modal se termina de Ocultar (Cerrar)
         $('.bb-video-modal').on('hidden.bs.modal', function () {
-            $(this).find('iframe').attr('src', '');
+            var $iframe = $(this).find('iframe');
+            if ($iframe.length) {
+                var srcGuardado = $iframe.attr('src'); // Guardamos el link
+                $iframe.attr('src', '');               // Lo borramos para cortar el audio
+                $iframe.attr('src', srcGuardado);      // Lo volvemos a poner para la próxima vez
+            }
         });
     });
 </script>

@@ -44,11 +44,21 @@ class Streaming extends BaseController
 
         $streamingModel = new StreamingModel();
         
-        // Recogemos los valores
         $duracion = $this->request->getPost('duracion_streaming');
         $temporadas = $this->request->getPost('temporadas_streaming');
+        $url = $this->request->getPost('trailer_streaming');
 
-        // LÓGICA DE LIMPIEZA: Si hay temporadas, anulamos la duración para que sea Serie pura
+        // 1. Lógica YouTube: Convertir a formato EMBED
+        if (!empty($url)) {
+            if (strpos($url, 'watch?v=') !== false) {
+                $url = str_replace('watch?v=', 'embed/', $url);
+                $url = explode('&', $url)[0]; // Quitamos parámetros extras de listas de reproducción
+            } elseif (strpos($url, 'youtu.be/') !== false) {
+                $url = str_replace('youtu.be/', 'youtube.com/embed/', $url);
+            }
+        }
+
+        // 2. Lógica Series: Si hay temporadas, anulamos duración
         if (!empty($temporadas) && $temporadas > 0) {
             $duracion = null;
         }
@@ -60,7 +70,7 @@ class Streaming extends BaseController
             'duracion_streaming'          => $duracion ?: null,
             'temporadas_streaming'        => $temporadas ?: null,
             'caratula_streaming'          => $this->request->getPost('caratula_streaming'),
-            'trailer_streaming'           => $this->request->getPost('trailer_streaming'),
+            'trailer_streaming'           => $url, // URL ya convertida
             'clasificacion_streaming'     => $this->request->getPost('clasificacion_streaming'),
             'sipnosis_streaming'          => $this->request->getPost('sipnosis_streaming'),
             'id_genero'                   => $this->request->getPost('id_genero'),
@@ -68,7 +78,7 @@ class Streaming extends BaseController
         ];
 
         $streamingModel->insert($datos);
-        return redirect()->to(base_url('admin/streaming'))->with('mensaje', 'Título agregado correctamente.');
+        return redirect()->to(base_url('admin/streaming'))->with('mensaje', '¡Título guardado y link de YouTube procesado!');
     }
 
     // Cambiar estatus (Habilitar / Deshabilitar)

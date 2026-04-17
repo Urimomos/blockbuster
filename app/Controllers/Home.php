@@ -31,12 +31,23 @@ class Home extends BaseController
         // 1. Atrapamos lo que el usuario escribió en el buscador (la variable 'q')
         $palabra = $this->request->getGet('q');
 
-        // 2. Aquí es donde en el futuro llamarás a tu Modelo para buscar en la Base de Datos
-        // Ejemplo: $resultados = $peliculaModel->like('titulo', $palabra)->findAll();
+        $streamingModel = new StreamingModel();
+        $resultados = [];
+        
+        if (!empty($palabra)) {
+            $resultados = $streamingModel->select('streaming.*, generos.nombre_genero')
+                                         ->join('generos', 'generos.id_genero = streaming.id_genero', 'left')
+                                         ->where('estatus_streaming', 1)
+                                         ->groupStart()
+                                            ->like('nombre_streaming', $palabra)
+                                            ->orLike('sipnosis_streaming', $palabra)
+                                         ->groupEnd()
+                                         ->findAll();
+        }
 
-        // 3. Empaquetamos la palabra para mandarla a la vista
         $data = [
-            'termino_busqueda' => $palabra
+            'termino_busqueda' => $palabra,
+            'resultados'       => $resultados
         ];
 
         // 4. Mostramos la página de resultados
