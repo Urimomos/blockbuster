@@ -14,6 +14,7 @@ $routes->get('/buscar', 'Home::buscar');
 $routes->get('/planes', 'Home::planes');
 
 $routes->view('/registro', 'signup'); 
+$routes->post('/registro/guardar', 'Registro::guardar');
 $routes->get('/categorias/peliculas', 'Categorias::peliculas');
 $routes->get('/categorias/series', 'Categorias::series');
 $routes->get('/detalles/(:num)', 'Detalles::index/$1'); 
@@ -35,14 +36,19 @@ $routes->post('/perfil/subir_foto', 'Perfil::subir_foto');
 // ==========================================
 $routes->get('/login', 'Login::index');
 $routes->post('/login/autenticar', 'Login::autenticar');
-$routes->get('login/salir', 'Login::logout'); // Para el portal público
-$routes->get('logout', 'Login::logout');
+$routes->get('/login/salir', 'Login::logout'); // Para el portal público
+$routes->get('/logout', 'Login::logout');
 
 
 // ==========================================
 // RUTAS DEL PANEL ADMINISTRADOR 
 // ==========================================
 $routes->get('/admin/dashboard', 'Login::dashboard'); 
+
+// RUTAS DE PERFIL DE ADMIN/OPERADOR
+$routes->get('/admin/perfil', 'AdminPerfil::index');
+$routes->post('/admin/perfil/actualizar', 'AdminPerfil::actualizar');
+$routes->post('/admin/perfil/subir_foto', 'AdminPerfil::subir_foto');
 
 // CRUD DE USUARIOS
 $routes->get('/admin/usuarios', 'Usuarios::index');
@@ -64,6 +70,10 @@ $routes->get('/admin/planes/editar/(:num)', 'Planes::editar/$1');
 $routes->post('/admin/planes/actualizar/(:num)', 'Planes::actualizar/$1');
 $routes->get('/admin/planes/cambiar_estatus/(:num)/(:any)', 'Planes::cambiar_estatus/$1/$2');
 $routes->get('/admin/planes/eliminar/(:num)', 'Planes::eliminar/$1');
+// Ruta para procesar los alquileres
+$routes->get('/alquilar/(:num)', 'Alquiler::procesar/$1');
+// Agrega esta nueva línea:
+$routes->get('/ver-pelicula/(:num)', 'Alquiler::ver/$1');
 
 // CRUD DE STREAMING
 $routes->get('/admin/streaming', 'Streaming::index');
@@ -90,7 +100,9 @@ $routes->get('/admin/videos/eliminar/(:num)', 'Videos::eliminar/$1');
 $routes->get('/admin/clientes', 'Clientes::index');
 $routes->post('/admin/clientes/actualizar', 'Clientes::actualizar');
 $routes->get('/admin/clientes/cambiar_estatus/(:num)/(:any)', 'Clientes::cambiar_estatus/$1/$2');
+$routes->get('/admin/clientes/eliminar/(:num)', 'Clientes::eliminar/$1');
 
 // Módulo de Validar Pagos
 $routes->get('/admin/pagos', 'Pagos::index');
-$routes->get('/admin/pagos/cambiar_estatus/(:num)/(:any)', 'Pagos::cambiar_estatus/$1/$2'); 
+$routes->get('/admin/pagos/cambiar_estatus/(:num)/(:any)', 'Pagos::cambiar_estatus/$1/$2');
+$routes->get('/admin/pagos/eliminar/(:num)', 'Pagos::eliminar/$1');

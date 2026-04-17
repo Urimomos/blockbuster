@@ -59,4 +59,15 @@ class Clientes extends BaseController
         
         return redirect()->to(base_url('admin/clientes'))->with('mensaje', 'Estatus de la cuenta actualizado.');
     }
+
+    // Eliminar Cliente permanentemente
+    public function eliminar($id = null)
+    {
+        if (!$this->verificarAcceso()) return redirect()->to(base_url('admin/dashboard'));
+
+        $usuarioModel = new UsuarioModel();
+        $usuarioModel->delete($id);
+        
+        return redirect()->to(base_url('admin/clientes'))->with('mensaje', 'Cliente eliminado permanentemente.');
+    }
 }

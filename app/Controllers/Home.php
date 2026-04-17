@@ -22,6 +22,22 @@ class Home extends BaseController
             'series'    => $streamingModel->getSeries(6)
         ];
 
+        // Traemos las películas alquiladas y ACTIVAS del usuario actual
+        $datos['mis_alquileres'] = [];
+        if (session()->get('is_logged_in')) {
+            $db = \Config\Database::connect();
+            
+            $alquileres = $db->table('alquileres')
+                             ->select('id_streaming')
+                             ->where('id_usuario', session()->get('id_usuario'))
+                             ->where('estatus_alquiler', 1) // Activos
+                             ->where('fecha_fin_alquiler >=', date('Y-m-d'))
+                             ->get()
+                             ->getResultArray();
+            
+            $datos['mis_alquileres'] = array_column($alquileres, 'id_streaming');
+        }
+
         // Le enviamos el arreglo $datos a la vista
         return view('index', $datos);
     }
@@ -63,6 +79,22 @@ class Home extends BaseController
         $datos = [
             'planes' => $planModel->where('estatus_plan', 1)->findAll()
         ];
+        // Traemos las películas alquiladas y ACTIVAS del usuario actual
+        $datos['mis_alquileres'] = [];
+        if (session()->get('is_logged_in')) {
+            $db = \Config\Database::connect();
+            
+            $alquileres = $db->table('alquileres')
+                             ->select('id_streaming')
+                             ->where('id_usuario', session()->get('id_usuario'))
+                             ->where('estatus_alquiler', 1) // Solo las que están "En proceso"
+                             ->where('fecha_fin_alquiler >=', date('Y-m-d')) // Que no estén vencidas
+                             ->get()
+                             ->getResultArray();
+            
+            // Lo convertimos en un arreglo simple, ej: [1, 5, 8]
+            $datos['mis_alquileres'] = array_column($alquileres, 'id_streaming');
+        }
 
         return view('planes_publico', $datos);
     }

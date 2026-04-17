@@ -87,6 +87,7 @@
                                 <ul class="list-unstyled text-left text-light mb-4" style="line-height: 2;">
                                     <li><i class="fa fa-check text-success mr-2"></i> Límite de <?= $mi_plan['cantidad_limite_plan'] ?> pantallas</li>
                                     <li><i class="fa fa-check text-success mr-2"></i> Acceso total al catálogo</li>
+                                    <li><i class="fa fa-ticket mr-2" style="color: #FFCC00;"></i> <?= esc($usuario['alquileres_restantes'] ?? 0) ?> alquiler(es) restante(s)</li>
                                 </ul>
 
                             <?php elseif($mi_plan['estatus_usuario_plan'] == 0): ?>

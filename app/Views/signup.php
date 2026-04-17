@@ -26,6 +26,13 @@
                 <h3>Crea tu cuenta</h3>
 
                 <form action="<?= base_url('registro/guardar') ?>" method="POST">
+
+                    <?php if(session()->getFlashdata('error')): ?>
+                        <div class="error-alert" style="background: rgba(220, 53, 69, 0.1); border-left: 3px solid #dc3545; color: #ff6b6b; padding: 12px 15px; border-radius: 4px; margin-bottom: 25px; font-family: 'Mulish', sans-serif; font-size: 0.9rem; display: flex; align-items: center;">
+                            <i class="fa fa-exclamation-circle" style="margin-right: 10px;"></i>
+                            <?= session()->getFlashdata('error') ?>
+                        </div>
+                    <?php endif; ?>
                     
                     <div class="tech-input-group">
                         <i class="fa fa-user left-icon"></i>

@@ -73,6 +73,10 @@
                                     <i class="fa fa-check"></i>
                                 </a>
                             <?php endif; ?>
+                            
+                            <a href="<?= base_url('admin/clientes/eliminar/'.$c['id_usuario']) ?>" class="btn btn-sm btn-outline-danger ml-1" title="Eliminar Cliente" onclick="return confirm('¿Estás seguro de eliminar permanentemente a este cliente?');">
+                                <i class="fa fa-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     <?php endforeach; else: ?>

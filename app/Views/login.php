@@ -35,6 +35,13 @@
                             <?= session()->getFlashdata('error') ?>
                         </div>
                     <?php endif; ?>
+                    
+                    <?php if(session()->getFlashdata('mensaje')): ?>
+                        <div class="error-alert" style="background: rgba(40, 167, 69, 0.1); border-left-color: #28a745; color: #28a745;">
+                            <i class="fa fa-check-circle"></i>
+                            <?= session()->getFlashdata('mensaje') ?>
+                        </div>
+                    <?php endif; ?>
 
                     <div class="tech-input-group">
                         <i class="fa fa-user left-icon"></i>

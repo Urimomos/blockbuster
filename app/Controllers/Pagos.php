@@ -51,4 +51,18 @@ public function cambiar_estatus($id_pago = null, $estatus = null)
 
         return redirect()->to(base_url('admin/pagos'))->with('error', 'Error: Pago no encontrado.');
     }
+
+    // Eliminar pago permanentemente
+    public function eliminar($id_pago = null)
+    {
+        // Solo Administradores (745) y Operadores (125)
+        if (!in_array(session()->get('id_rol'), [745, 125])) {
+            return redirect()->to(base_url('admin/dashboard'));
+        }
+
+        $db = \Config\Database::connect();
+        $db->table('pagos')->where('id_pago', $id_pago)->delete();
+
+        return redirect()->to(base_url('admin/pagos'))->with('mensaje', 'Pago eliminado permanentemente.');
+    }
 }

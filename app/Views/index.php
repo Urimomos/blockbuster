@@ -4,6 +4,24 @@
 
 <section class="hero">
     <div class="container">
+        
+        <?php if(session()->getFlashdata('mensaje')): ?>
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert" style="background-color: rgba(0,255,0,0.1); border: 1px solid #00FF00; color: #00FF00;">
+                <i class="fa fa-check-circle mr-2"></i> <?= session()->getFlashdata('mensaje') ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white; opacity: 1;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php endif; ?>
+        <?php if(session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert" style="background-color: rgba(255,0,0,0.1); border: 1px solid #FF0000; color: #FF0000;">
+                <i class="fa fa-exclamation-circle mr-2"></i> <?= session()->getFlashdata('error') ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white; opacity: 1;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php endif; ?>
+
         <div class="section-title"><h4>Streaming Más Visitados</h4></div>
         <div class="hero__slider owl-carousel">
             <?php if(!empty($recientes)): foreach($recientes as $item): ?>
@@ -99,10 +117,26 @@
             </div>
             <div class="modal-body" style="color: white;">
                 
-                <div class="embed-responsive embed-responsive-16by9 mb-3" style="border: 2px solid #FFCC00; border-radius: 5px;">
-                    <iframe class="embed-responsive-item" src="<?= $modal_item['trailer_streaming'] ?>" frameborder="0" allowfullscreen></iframe>
+                <?php 
+                // VERIFICAMOS SI EL USUARIO YA ALQUILÓ ESTE TÍTULO
+                // $mis_alquileres debe venir del controlador Home.php
+                $ya_la_tengo = isset($mis_alquileres) && in_array($modal_item['id_streaming'], $mis_alquileres); 
+                ?>
+
+                <div class="embed-responsive embed-responsive-16by9 mb-3" style="border: 2px solid <?= $ya_la_tengo ? '#00FF00' : '#FFCC00' ?>; border-radius: 5px;">
+                    <?php if($ya_la_tengo && !empty($modal_item['url_pelicula_completa'])): ?>
+                        <iframe class="embed-responsive-item" src="<?= $modal_item['url_pelicula_completa'] ?>" frameborder="0" allowfullscreen></iframe>
+                    <?php else: ?>
+                        <iframe class="embed-responsive-item" src="<?= $modal_item['trailer_streaming'] ?>" frameborder="0" allowfullscreen></iframe>
+                    <?php endif; ?>
                 </div>
-                
+
+                <?php if($ya_la_tengo): ?>
+                    <div class="alert text-center font-weight-bold mb-3" style="background-color: rgba(0,255,0,0.1); color: #00FF00; border: 1px solid #00FF00;">
+                        <i class="fa fa-unlock-alt mr-2"></i> Título Desbloqueado - Disfruta tu contenido
+                    </div>
+                <?php endif; ?>
+
                 <p><strong>Descripción:</strong> <?= esc($modal_item['sipnosis_streaming']) ?></p>
                 <hr style="border-top: 1px solid rgba(255,255,255,0.2);">
                 <p>
@@ -112,8 +146,22 @@
                 </p>
                 
                 <div class="text-right mt-4">
-                    <button class="btn btn-alquilar" style="background:#FFCC00; color:#000; font-weight:bold; padding: 10px 25px;">ALQUILAR AHORA</button>
+                    <?php if(!$ya_la_tengo): ?>
+                        <a href="<?= base_url('alquilar/' . $modal_item['id_streaming']) ?>" 
+                           class="btn" 
+                           style="background:#FFCC00; color:#000; font-weight:bold; padding: 10px 25px;"
+                           onclick="return confirm('¿Deseas gastar 1 ticket para alquilar este título por 48 horas?');">
+                           <i class="fa fa-ticket mr-1"></i> ALQUILAR AHORA
+                        </a>
+                    <?php else: ?>
+                        <a href="<?= base_url('ver-pelicula/' . $modal_item['id_streaming']) ?>" 
+                           class="btn font-weight-bold" 
+                           style="background-color: #00FF00; color: #000; padding: 10px 25px; box-shadow: 0 0 10px rgba(0,255,0,0.5);">
+                            <i class="fa fa-play-circle mr-1"></i> VER PELÍCULA AHORA
+                        </a>
+                    <?php endif; ?>
                 </div>
+
             </div>
         </div>
     </div>

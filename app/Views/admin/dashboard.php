@@ -7,7 +7,13 @@
         <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, #001a57 0%, #003399 100%); color: white; border-left: 6px solid #ffcc00 !important; border-radius: 8px;">
             <div class="card-body p-4 d-flex align-items-center">
                 <div class="mr-4 d-none d-md-block">
-                    <i class="fa fa-user-circle-o fa-4x" style="color: #ffcc00;"></i>
+                    <?php if(session()->get('imagen_usuario')): ?>
+                        <img src="<?= base_url('img/perfiles/' . session()->get('imagen_usuario')) ?>" 
+                             class="rounded-circle shadow-sm" 
+                             style="width: 70px; height: 70px; object-fit: cover; border: 3px solid #ffcc00;">
+                    <?php else: ?>
+                        <i class="fa fa-user-circle-o fa-4x" style="color: #ffcc00;"></i>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <h2 class="font-weight-bold mb-2" style="color: #ffcc00;">¡Hola, <?= session()->get('nombre') ?>!</h2>
@@ -159,6 +165,7 @@
                         <td><span class="badge badge-dark"><?= session()->get('rol_nombre') ?> (ID: <?= session()->get('id_rol') ?>)</span></td>
                     </tr>
                 </table>
+                <a href="<?= base_url('admin/perfil') ?>" class="btn btn-sm mt-3 px-3" style="background-color: #001a57; color: white;"><i class="fa fa-pencil"></i> Editar Mi Perfil</a>
             </div>
         </div>
     </div>

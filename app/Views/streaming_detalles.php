@@ -59,10 +59,25 @@
                                 </div>
                             </div>
                             <div class="anime__details__btn">
-                                <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i> Favorito</a>
-                                <a href="<?= session()->get('is_logged_in') ? '#' : base_url('planes') ?>" class="watch-btn">
-                                    <span><?= session()->get('is_logged_in') ? 'Reproducir Ahora' : 'Ver Planes para Alquilar' ?></span> <i class="fa fa-angle-right"></i>
-                                </a>
+                                <?php 
+                                // Verificamos si el usuario ya tiene este título alquilado y activo
+                                $ya_la_tengo = isset($mis_alquileres) && in_array($item['id_streaming'], $mis_alquileres); 
+                                ?>
+
+                                <?php if($ya_la_tengo): ?>
+                                    <a href="<?= base_url('ver-pelicula/' . $item['id_streaming']) ?>" 
+                                       class="btn font-weight-bold" 
+                                       style="background-color: #00FF00; color: #000; padding: 14px 30px; box-shadow: 0 0 10px rgba(0,255,0,0.5); text-transform: uppercase; letter-spacing: 2px;">
+                                        <i class="fa fa-play-circle mr-2"></i> Ver Película Ahora
+                                    </a>
+                                <?php else: ?>
+                                    <a href="<?= base_url('alquilar/' . $item['id_streaming']) ?>" 
+                                       class="btn" 
+                                       style="background:#FFCC00; color:#001A5E; font-weight:bold; padding: 14px 30px; text-transform: uppercase; letter-spacing: 2px;"
+                                       onclick="return confirm('¿Deseas gastar 1 ticket para alquilar este título por 48 horas?');">
+                                       <i class="fa fa-ticket mr-2"></i> Alquilar Ahora
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
